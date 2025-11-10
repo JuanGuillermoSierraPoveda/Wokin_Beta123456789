@@ -8,10 +8,14 @@ from kivy.clock import Clock
 from kivy.properties import StringProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
 from basedatos import registrar_usuario, verificar_usuario
-from plyer import filechooser
 from kivymd.toast import toast
 
 import basedatos
+
+global qin,qfin,map
+qin=""
+qfin=""
+map=""
 
 class SplashScreen(Screen):
     pass
@@ -38,10 +42,29 @@ class SignupScreen(Screen):
 class HomeScreen(Screen):
     current_screen = StringProperty("home")
     def cambiar_contenido(self, screen_name):
+        #print("cambio",screen_name)
         self.manager.current = screen_name
 
 class SearchScreen(Screen):
     current_screen = StringProperty("search")
+    def cambiar_contenido(self, screen_name):
+        self.manager.current = screen_name
+
+class MapScreen(Screen):
+    current_screen = StringProperty("map")
+    
+    def cambiar_contenido(self, screen_name):
+        print("BBBBBB")
+        self.manager.current = screen_name
+
+    def poner_estado(self, estado):
+        def poner_estado(self, estado):
+            print("AAAAAAAAAA", estado)
+            self.ids.q0.text = f"Pressed {estado}"
+
+
+class MapSelScreen(Screen):
+    current_screen = StringProperty("mapsel")
     def cambiar_contenido(self, screen_name):
         self.manager.current = screen_name
 
@@ -175,6 +198,8 @@ class Wokin(MDApp):
         Builder.load_file('settings.kv')
         Builder.load_file('favorites.kv')
         Builder.load_file('informacion personal.kv')
+        Builder.load_file('map.kv')
+        Builder.load_file('mapsel.kv')
 
         sm = WindowManager()
         sm.add_widget(SplashScreen(name='splash'))
@@ -187,6 +212,8 @@ class Wokin(MDApp):
         sm.add_widget(SettingsScreen(name="settings"))
         sm.add_widget(FavoritesScreen(name="favorites"))
         sm.add_widget(InformacionPersonalScreen(name="informacion_personal"))
+        sm.add_widget(MapScreen(name='map'))
+        sm.add_widget(MapScreen(name='mapsel'))
         return sm
 
     def change_screen(self, sm):

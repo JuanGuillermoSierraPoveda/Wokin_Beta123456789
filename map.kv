@@ -1,93 +1,63 @@
-<HomeScreen>:
+<MapScreen>:
     BoxLayout:
         orientation: "vertical"
         
-        BoxLayout:
-            size_hint_y: None
-            height: 60
-            spacing: 10
-            padding: 10, 5
-            canvas.before:
-                Color:
-                    rgba: (27/255, 94/255, 31/255, 1)
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-
-            BoxLayout:
-                size_hint_x: 0.75
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    RoundedRectangle:
-                        pos: self.pos
-                        size: self.size
-                        radius: [20,]
-                
-                TextInput:
-                    id: search_input
-                    size_hint_x: 1
-                    hint_text: "Buscar"
-                    multiline: False
-                    background_color: 0, 0, 0, 0
-                    foreground_color: 0, 0, 0, 1
-                    cursor_color: 0, 0, 0, 1
-                    padding: [20, (self.height - self.font_size) / 2 - 5, 0, 0]
-                    font_size: '15sp'
-
-            Button:
-                id: filter_button
-                text: ""
-                size_hint_x: 0.25
-                background_normal: ""
-                background_color: 0, 0, 0, 0
-                color: 1, 1, 1, 1
+        FloatLayout:
+            Image:
+                pos_hint:{'center_y':0.5}
+                source: "imgmap/base.png"
                 halign: 'center'
                 valign: 'middle'
-                text_size: self.width - dp(30), self.height
-                font_size: '15sp'
-                
-                BoxLayout:
-                    orientation: "horizontal"
-                    spacing: 5
-                    pos: self.parent.pos
-                    size: self.parent.size
-                    padding: 5, 0
-                    
-                    Image:
-                        source: "icons/filter.png"
-                        size_hint_x: None
-                        width: dp(25)
-                        allow_stretch: True
-                        keep_ratio: True
-                        pos_hint: {'center_y': 0.5}
-                    
-                    Label:
-                        text: "Filtrar"
-                        color: 1, 1, 1, 1
-                        font_size: '15sp'
-                        size_hint_x: None
-                        width: self.texture_size[0] + dp(5)
-                        pos_hint: {'center_y': 0.5}
+                fit_mode: 'fill'
+                allow_stretch: True
+                keep_ratio: True
 
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
+            Button:
+                id: q0
+                text: "q0"
+                color: 0,0,0,1
+                pos_hint: {'center_x': 0.82, 'center_y': 0.12}
+                background_normal: "icons/estbase.png"
+                size: 80, 80
+                size_hint: None, None
+                on_press: root.poner_estado("q0")
 
-            BoxLayout:
-                id: contenido_scroll
-                orientation: "vertical"
-                size_hint_y: None
-                height: self.minimum_height
-                spacing: 10
-                padding: 10
+            Button:
+                id: q1
+                text: "q1"
+                color: 0,0,0,1
+                pos_hint: {'center_x': 0.93, 'center_y': 0.31}
+                background_normal: "icons/estbase.png"
+                size: 80, 80
+                size_hint: None, None
 
-                Button:
-                    text: "Carupa"
-                    background_normal: "imgmap/base.png"
-                    size_hint_y: None
-                    height: 500
-                    on_press: root.cambiar_contenido("map")
+
+            Button:
+                id: q2
+                text: "q2"
+                color: 0,0,0,1
+                pos_hint: {'center_x': 0.23, 'center_y': 0.74}
+                background_normal: "icons/estbase.png"
+                size: 80, 80
+                size_hint: None, None
+
+            Button:
+                id: q3
+                text: "q3"
+                color: 0,0,0,1
+                pos_hint: {'center_x': 0.57, 'center_y': 0.85}
+                background_normal: "icons/estbase.png"
+                size: 80, 80
+                size_hint: None, None
+
+            Button:
+                id: q4
+                text: "q4"
+                color: 0,0,0,1
+                pos_hint: {'center_x': 0.05, 'center_y': 0.9}
+                background_normal: "icons/estbase.png"
+                size: 80, 80
+                size_hint: None, None
 
         GridLayout:
             size_hint_y: None
