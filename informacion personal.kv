@@ -1,0 +1,161 @@
+<InformacionPersonalScreen>:
+    name: "informacion_personal"
+    BoxLayout:
+        orientation: "vertical"
+        
+        # ----------------------------------------------------
+        # A. BARRA SUPERIOR (Top Bar) - "Informacion Personal"
+        # ----------------------------------------------------
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            padding: 10, 0
+            canvas.before:
+                Color:
+                    rgba: (27/255, 94/255, 31/255, 1) # Color de fondo verde oscuro
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                text: "X" # O un icono de imagen
+                font_size: '25sp'
+                color: 1, 1, 1, 1
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                size_hint_x: None
+                width: 50
+                on_press: app.root.current = "settings" # Vuelve a la pantalla de configuraciones
+
+            Label:
+                text: "Información Personal"
+                color: 1, 1, 1, 1
+                font_size: '20sp'
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+        
+        # ----------------------------------------------------
+        # B. CONTENIDO SCROLLEABLE (Detalles del usuario)
+        # ----------------------------------------------------
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: 20, 10, 20, 10 # Márgenes para el contenido
+                spacing: 15 # Espacio entre cada sección de información
+
+                # --- Sección de Nombre de Usuario ---
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 5
+
+                    Label:
+                        text: "Nombre de usuario"
+                        color: 0.5, 0.5, 0.5, 1 # Gris tenue
+                        font_size: '16sp'
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.width, self.height # Para que halign funcione
+                        size_hint_y: None
+                        height: dp(20)
+                    
+                    RelativeLayout: # Para superponer el TextInput y el botón Editar/Guardar
+                        size_hint_y: None
+                        height: dp(40) # Altura del campo
+
+                        TextInput:
+                            id: username_input
+                            text: app.user_name # Muestra el nombre de usuario actual
+                            multiline: False
+                            readonly: True # Inicialmente de solo lectura
+                            background_color: 0, 0, 0, 0 # Transparente para parecer texto
+                            foreground_color: 0, 0, 0, 1
+                            cursor_color: 0, 0, 0, 1
+                            font_size: '18sp'
+                            padding: [0, (self.height - self.font_size) / 2 - dp(5), dp(70), 0] # Espacio para el botón
+                            size_hint_x: 1
+                            pos_hint: {'center_y': 0.5}
+
+                        Button:
+                            id: edit_username_button
+                            text: "Editar"
+                            size_hint: None, None
+                            size: dp(60), dp(30)
+                            pos_hint: {'right': 1, 'center_y': 0.5}
+                            background_normal: ""
+                            background_color: (27/255, 94/255, 31/255, 1) if self.state == 'normal' else (20/255, 70/255, 25/255, 1)
+                            color: 1, 1, 1, 1
+                            on_press: root.toggle_edit_mode('username')
+                
+                Widget: # Línea divisoria
+                    size_hint_y: None
+                    height: 1
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                # --- Sección de Contraseña ---
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 5
+
+                    Label:
+                        text: "Contraseña"
+                        color: 0.5, 0.5, 0.5, 1 # Gris tenue
+                        font_size: '16sp'
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.width, self.height
+                        size_hint_y: None
+                        height: dp(20)
+                    
+                    RelativeLayout:
+                        size_hint_y: None
+                        height: dp(40)
+
+                        TextInput:
+                            id: password_input
+                            text: "********" # Muestra oculto por seguridad
+                            multiline: False
+                            password: True # Para ocultar el texto
+                            readonly: True
+                            background_color: 0, 0, 0, 0
+                            foreground_color: 0, 0, 0, 1
+                            cursor_color: 0, 0, 0, 1
+                            font_size: '18sp'
+                            padding: [0, (self.height - self.font_size) / 2 - dp(5), dp(70), 0]
+                            size_hint_x: 1
+                            pos_hint: {'center_y': 0.5}
+
+                        Button:
+                            id: edit_password_button
+                            text: "Editar"
+                            size_hint: None, None
+                            size: dp(60), dp(30)
+                            pos_hint: {'right': 1, 'center_y': 0.5}
+                            background_normal: ""
+                            background_color: (27/255, 94/255, 31/255, 1) if self.state == 'normal' else (20/255, 70/255, 25/255, 1)
+                            color: 1, 1, 1, 1
+                            on_press: root.toggle_edit_mode('password')
+
+                Widget: # Línea divisoria
+                    size_hint_y: None
+                    height: 1
+                    canvas:
+                        Color:
+                            rgba: 0.85, 0.85, 0.85, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size

@@ -1,0 +1,337 @@
+<ProfileScreen>:
+    # ----------------------------------------------------
+    # 1. Contenedor principal de la pantalla de Perfil
+    # ----------------------------------------------------
+    BoxLayout:
+        orientation: "vertical"
+        # Puedes añadir una barra superior aquí si es necesario
+
+        # ----------------------------------------------------
+        # 2. ScrollView (Contenido Principal del Perfil)
+        # ----------------------------------------------------
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            padding: 10, 5
+            canvas.before:
+                Color:
+                    rgba: (27/255, 94/255, 31/255, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_x: 0.75
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20,]
+                
+                TextInput:
+                    id: search_input
+                    size_hint_x: 1
+                    hint_text: "Buscar"
+                    multiline: False
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 0, 0, 0, 1
+                    padding: [20, (self.height - self.font_size) / 2 - 5, 0, 0]
+                    font_size: '15sp'
+
+            Button:
+                id: filter_button
+                text: ""
+                size_hint_x: 0.25
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 1, 1, 1, 1
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.width - dp(30), self.height
+                font_size: '15sp'
+                
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: 5
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    padding: 5, 0
+                    
+                    Image:
+                        source: "icons/filter.png"
+                        size_hint_x: None
+                        width: dp(25)
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {'center_y': 0.5}
+                    
+                    Label:
+                        text: "Filtrar"
+                        color: 1, 1, 1, 1
+                        font_size: '15sp'
+                        size_hint_x: None
+                        width: self.texture_size[0] + dp(5)
+                        pos_hint: {'center_y': 0.5}
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            
+            # Contenedor interno del ScrollView (Todo se apila aquí)
+            BoxLayout:
+                background_color: 0.96, 0.96, 0.96, 1
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height # Crucial para que el BoxLayout interno se adapte al contenido
+                padding: 0, 10, 0, 10 # Padding superior e inferior
+                spacing: 20 # Espacio general entre secciones
+
+                # ----------------------------------------------------
+                # A. ENCABEZADO DE USUARIO (Imagen y Nombre) como BOTÓN
+                # ----------------------------------------------------
+                Button:
+                    size_hint_y: None
+                    height: 80
+                    padding: 0
+                    background_normal: ""
+                    background_color: 0, 0, 0, 0
+                    on_press: root.open_gallery()
+                    
+                    # Contenedor interno para alinear imagen y texto
+                    BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 15
+                        padding: 20, 0
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        # 🚨 CLAVE: Agregar pos_hint a este BoxLayout principal para centrarlo si es necesario,
+                        # aunque lo crucial es la alineación de sus hijos.
+
+                        # Ícono de perfil
+                        Image:
+                            id: profile_image
+                            source: root.profile_image_source
+                            size_hint_x: None
+                            width: 60
+                            allow_stretch: True
+                            keep_ratio: True
+                            pos_hint: {'center_y': 0.5} # ✅ Correcto, centra la imagen verticalmente
+
+                        # Nombre de usuario
+                        Label:
+                            text: app.user_name
+                            color: 0, 0, 0, 1
+                            font_size: '24sp'
+                            halign: 'left'
+                            valign: 'middle'
+                            text_size: self.size
+                            pos_hint: {'center_y': 0.5} # ✅ Correcto, centra el Label verticalmente
+                            
+                            # 🚨 CLAVE: Forzar la altura del Label a ser solo la altura de su texto.
+                            # Esto evita que un Label grande empuje el centrado vertical.
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                # ----------------------------------------------------
+                # B. MÉTRICAS (Seguidores, Siguiendo, Compañeros)
+                # ----------------------------------------------------
+                GridLayout:
+                    cols: 3
+                    size_hint_y: None
+                    height: 80
+                    padding: 10, 0
+                    
+                    # Función para crear una columna de métrica
+                    BoxLayout:
+                        orientation: "vertical"
+                        Label:
+                            text: "0" # Valor dinámico
+                            color: 0, 0, 0, 1
+                            font_size: '20sp'
+                        Label:
+                            text: "Seguidores"
+                            color: 0, 0, 0, 1
+                            font_size: '15sp'
+                    
+                    BoxLayout:
+                        orientation: "vertical"
+                        Label:
+                            text: "0" # Valor dinámico
+                            color: 0, 0, 0, 1
+                            font_size: '20sp'
+                        Label:
+                            text: "Siguiendo"
+                            color: 0, 0, 0, 1
+                            font_size: '15sp'
+                    
+                    BoxLayout:
+                        orientation: "vertical"
+                        Label:
+                            text: "0" # Valor dinámico
+                            color: 0, 0, 0, 1
+                            font_size: '20sp'
+                        Label:
+                            text: "Compañeros"
+                            color: 0, 0, 0, 1
+                            font_size: '15sp'
+
+                # ----------------------------------------------------
+                # D. BOTÓN "FAVORITOS" (Reemplaza "Todavía no hay rutas")
+                # ----------------------------------------------------
+                Button:
+                    size_hint_y: None
+                    height: 50 # Altura del botón
+                    background_normal: "" # Fondo transparente
+                    background_color: 0, 0, 0, 0 # Fondo transparente
+                    padding: 10, 0 # Padding interno para el texto
+                    on_press: root.cambiar_contenido("favorites")
+
+
+                    BoxLayout:
+                        orientation: "horizontal"
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        padding: 10, 0 # Padding interno para que el contenido no pegue a los bordes
+
+                        Label:
+                            text: "Favoritos"
+                            color: 0, 0, 0, 1 # Texto negro
+                            font_size: '18sp'
+                            halign: 'left'
+                            valign: 'middle'
+                            text_size: self.size # Para que halign funcione
+                            size_hint_x: 0.8 # Ocupa la mayor parte del espacio
+
+                        Label:
+                            text: "1 >" # Puedes cambiar el "1" dinámicamente si tienes una propiedad
+                            color: 0, 0, 0, 1 # Texto negro
+                            font_size: '18sp'
+                            halign: 'right'
+                            valign: 'middle'
+                            text_size: self.size # Para que halign funcione
+                            size_hint_x: 0.2 # Ocupa el resto del espacio
+
+                # Una línea separadora discreta, si la necesitas
+                Widget:
+                    size_hint_y: None
+                    height: 1
+                    canvas:
+                        Color:
+                            rgba: 0.8, 0.8, 0.8, 1 # Un gris claro
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+            # ----------------------------------------------------
+                # E. IMAGEN INFERIOR (Nueva sección)
+                # ----------------------------------------------------
+                Image:
+                    source: "icons/montañas.png" # 👈 Cambia a tu imagen real
+                    size_hint_y: None # Altura fija para la imagen
+                    height: 250 # Altura de la imagen (ajusta según necesites)
+                    allow_stretch: True
+                    keep_ratio: True # Puedes poner False si quieres que ocupe el espacio sin mantener proporción
+                                    # o True si es un patrón y quieres que mantenga la proporción.
+                                    # False es más común para imágenes de 'banner' que llenan el ancho.
+        # ----------------------------------------------------# 🚨 Nuevo Label para el mensaje debajo de la imagen
+                Label:
+                    text: "Todavía no publicas ninguna foto"
+                    color: 0, 0, 0, 1 # Texto negro
+                    font_size: '16sp'
+                    size_hint_y: None
+                    height: 40 # Altura para el Label
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size # Para que el texto se centre
+
+        GridLayout:
+            size_hint_y: None
+            height: 70
+            cols: 4
+            canvas.before:
+                Color:
+                    rgba: 165/255, 214/255, 167/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("home")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/home1.png" if root.current_screen == "home" else "icons/home.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
+            
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 0, 0, 0, 1
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("search")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/search1.png" if root.current_screen == "search" else "icons/search.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
+            
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 0, 0, 0, 1
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("perfil")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/account1.png" if root.current_screen == "perfil" else "icons/account.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
+        
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 0, 0, 0, 1
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("settings")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/settings1.png" if root.current_screen == "settings" else "icons/settings.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True

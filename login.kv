@@ -1,15 +1,15 @@
-<SignupScreen>:
+<LoginScreen>:
     MDBoxLayout:
         orientation: "vertical"
         spacing: "20dp"
         padding: "40dp"
         MDLabel:
-            text: "Crear cuenta"
+            text: "Iniciar sesión"
             halign: "center"
             font_style: "H4"
         MDTextField:
             id: username
-            hint_text: "Nuevo usuario"
+            hint_text: "Usuario"
         MDTextField:
             id: password
             hint_text: "Contraseña"
@@ -20,10 +20,10 @@
             halign: "center"
             theme_text_color: "Error"
         MDRaisedButton:
-            text: "Registrarse"
+            text: "Entrar"
             pos_hint: {"center_x": 0.5}
-            on_release: root.signup()
+            on_release: root.login()
         MDTextButton:
-            text: "Ya tengo cuenta"
+            text: "¿No tienes cuenta? Regístrate"
             pos_hint: {"center_x": 0.5}
-            on_release: app.root.current = "login"
+            on_release: app.root.current = "signup"

@@ -1,0 +1,194 @@
+<HomeScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+            padding: 10, 5
+            canvas.before:
+                Color:
+                    rgba: (27/255, 94/255, 31/255, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_x: 0.75
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20,]
+                
+                TextInput:
+                    id: search_input
+                    size_hint_x: 1
+                    hint_text: "Buscar"
+                    multiline: False
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 0, 0, 0, 1
+                    padding: [20, (self.height - self.font_size) / 2 - 5, 0, 0]
+                    font_size: '15sp'
+
+            Button:
+                id: filter_button
+                text: ""
+                size_hint_x: 0.25
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 1, 1, 1, 1
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.width - dp(30), self.height
+                font_size: '15sp'
+                
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: 5
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    padding: 5, 0
+                    
+                    Image:
+                        source: "icons/filter.png"
+                        size_hint_x: None
+                        width: dp(25)
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {'center_y': 0.5}
+                    
+                    Label:
+                        text: "Filtrar"
+                        color: 1, 1, 1, 1
+                        font_size: '15sp'
+                        size_hint_x: None
+                        width: self.texture_size[0] + dp(5)
+                        pos_hint: {'center_y': 0.5}
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            BoxLayout:
+                id: contenido_scroll
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+
+                Button:
+                    text: "Opción 1"
+                    size_hint_y: None
+                    height: 500
+                Button:
+                    text: "Opción 2"
+                    size_hint_y: None
+                    height: 500
+                Button:
+                    text: "Opción 3"
+                    size_hint_y: None
+                    height: 500
+                Button:
+                    text: "Opción 4"
+                    size_hint_y: None
+                    height: 500
+                Button:
+                    text: "Opción 5"
+                    size_hint_y: None
+                    height: 500
+
+        GridLayout:
+            size_hint_y: None
+            height: 70
+            cols: 4
+            canvas.before:
+                Color:
+                    rgba: 165/255, 214/255, 167/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("home")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/home1.png" if root.current_screen == "home" else "icons/home.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
+            
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 0, 0, 0, 1
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("search")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/search1.png" if root.current_screen == "search" else "icons/search.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
+            
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 0, 0, 0, 1
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("perfil")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/account1.png" if root.current_screen == "perfil" else "icons/account.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
+        
+            Button:
+                background_normal: ""
+                background_color: 0, 0, 0, 0
+                color: 0, 0, 0, 1
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, self.height
+                on_press: root.cambiar_contenido("settings")
+                BoxLayout:
+                    orientation: "vertical"
+                    spacing: 2
+                    padding: 0, 5, 0, 20
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    Image:
+                        source: "icons/settings1.png" if root.current_screen == "settings" else "icons/settings.png"
+                        size_hint_y: 0.4
+                        allow_stretch: True
+                        keep_ratio: True
